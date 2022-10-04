@@ -1,4 +1,5 @@
 # t1.py tokenizer
+from re import S
 import sys        # sys needed to access cmd line args and sys.exit()
 
 class Token:
@@ -50,8 +51,12 @@ def main():
 
    if len(sys.argv) == 3:   # check if correct number of cmd line args
       try:
-         infile = open(sys.argv[1], 'r')
-         source = infile.read()  # read source program
+         if sys.argv[2] == '-traceon':
+            infile = open(sys.argv[1], 'r')
+            source = infile.read()  # read source program
+         if sys.argv[1] =='-traceon':
+            infile = open(sys.argv[2], 'r')
+            source = infile.read()
       except IOError:
          print('Cannot read input file ' + sys.argv[1])
          sys.exit(1)
@@ -63,10 +68,7 @@ def main():
    if source[-1] != '\n':        # add newline to end if missing
       source = source + '\n'
 
-   if sys.argv[2] or sys.argv[3] == '-traceon':
-      print(sys.argv[2])
-    #   print(sys.argv[3])
-
+   if sys.argv[2] or sys.argv[1] == '-traceon':
       global trace 
       trace = True
       print('Line  Col Category       Lexeme\n')

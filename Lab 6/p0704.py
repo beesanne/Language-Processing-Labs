@@ -13,8 +13,8 @@ class Token:
 
 
 # globals grade
-trace = False        # controls token trace
-grade = True         # set to True to create output to be graded
+trace = True        # controls token trace
+grade = False         # set to True to create output to be graded
 source = ''          # receives entire source program
 sourceindex = 0      # index into the source code in source
 line = 0             # current line number
