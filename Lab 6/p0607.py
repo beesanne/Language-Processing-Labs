@@ -70,6 +70,7 @@ def main():
 
    try:
       tokenizer()                # tokenize source code in source
+
    except RuntimeError as emsg: 
      # output slash n in place of newline
      lexeme = token.lexeme.replace('\n', '\\n')
@@ -82,15 +83,18 @@ def main():
 def tokenizer():
    global token
    curchar = ' '                 # prime curchar with space
-   
+   totalint = 0
    totaleof = 0
    totalprint = 0
-   totalint = 0
    totalname = 0
    totalassign = 0
    totalleft = 0
    totalright = 0
    totalplus = 0
+   totalminus = 0
+   totaltimes = 0
+   totalnewline = 0 
+   totalerror = 0
 
    while True:
       # skip whitespace but not newlines
@@ -102,6 +106,7 @@ def tokenizer():
 
       if curchar.isdigit():            # start of unsigned int?
          token.category = UNSIGNEDINT  # save category of token
+         totalint += 1
          while True:
             token.lexeme += curchar    # append curchar to lexeme
             curchar = getchar()        # get next character
@@ -119,16 +124,34 @@ def tokenizer():
          # determine if lexeme is a keyword or name of variable
          if token.lexeme in keywords:
             token.category = keywords[token.lexeme]
+            if token.category == PRINT:
+               totalprint += 1
          else:
             token.category = NAME
+            totalname += 1
 
       elif curchar in smalltokens:
          token.category = smalltokens[curchar]   # get category
+         if token.category == PLUS:
+            totalplus += 1
+         if token.category == MINUS:
+            totalminus += 1
+         if token.category == ASSIGNOP:
+            totalassign += 1  
+         if token.category == LEFTPAREN:
+            totalleft += 1
+         if token.category == RIGHTPAREN:
+            totalright += 1
+         if token.category == TIMES:
+            totaltimes += 1    
+         if token.category == NEWLINE:
+            totalnewline += 1      
          token.lexeme = curchar
          curchar = getchar()       # move to first char after token
 
       else:                         
          token.category = ERROR    # invalid token 
+         totalerror += 1
          token.lexeme = curchar    # save lexeme
          raise RuntimeError('Invalid token')
 
@@ -136,28 +159,25 @@ def tokenizer():
       if trace:                    # display token if trace is True
          print("%3s %4s  %-14s %s" % (str(token.line), 
             str(token.column), catnames[token.category], token.lexeme))
-      if catnames[token.category] == 'PRINT':
-         totalprint += 1
-         print('PRINT: ' + str(totalprint))
-      elif catnames[token.category] == 'EOF':
-         totaleof +=1
-         print('EOF: ' + str(totaleof))
-      elif catnames[token.category] == 'UNSIGNEDINT':
-         totalint += 1
-         print('UNSIGNEDINT: ' + str(totalint))
-      elif catnames[token.category] == 'NAME':
-         totalname += 1
-         print('NAME: ' + str(totalname))
-      elif catnames[token.category] == 'ASSIGNOP':
-         totalassign += 1
-         print('ASSIGNOP: ' + str(totalassign))
-      
-      
-
-
 
       if token.category == EOF:    # finished tokenizing?
+         totaleof += 1
          break
+
+   print("Number of UNISIGNEDINTS: " +str(totalint) )
+   print("Number of EOF: " +str(totaleof) )
+   print("Number of PRINT: " +str(totalprint) )
+   print("Number of NAME: " +str(totalname) )
+   print("Number of ASSIGNOP: " +str(totalassign) )
+   print("Number of LEFTPAREN: " +str(totalleft) )
+   print("Number of RIGHTPAREN: " +str(totalright) )
+   print("Number of PLUS: " +str(totalplus) )
+   print("Number of MINUS: " +str(totalminus) )
+   print("Number of TIMES: " +str(totaltimes) )
+   print("Number of NEWLINE: " +str(totalnewline) )
+   print("Number of ERROR: " +str(totalerror) )
+
+
 
 
 
