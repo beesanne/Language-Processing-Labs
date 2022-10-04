@@ -1,0 +1,50 @@
+Line  Col Category       Lexeme
+
+  1    1  PRINT          print
+  1    6  LEFTPAREN      (
+  1    7  MINUS          -
+  1    8  UNSIGNEDINT    59
+  1   11  PLUS           +
+  1   13  UNSIGNEDINT    20
+  1   15  TIMES          *
+  1   16  UNSIGNEDINT    3
+  1   17  RIGHTPAREN     )
+  1   18  NEWLINE        
+
+  2    1  NAME           a
+  2    3  ASSIGNOP       =
+  2    5  UNSIGNEDINT    2
+  2    6  NEWLINE        
+
+  3    1  NAME           bb_1
+  3    6  ASSIGNOP       =
+  3    8  MINUS          -
+  3    9  NAME           a
+  3   11  PLUS           +
+  3   13  UNSIGNEDINT    12
+  3   15  NEWLINE        
+
+  4    1  PRINT          print
+  4    6  LEFTPAREN      (
+  4    7  NAME           a
+  4    8  TIMES          *
+  4    9  NAME           bb_1
+  4   14  PLUS           +
+  4   16  NAME           a
+  4   17  TIMES          *
+  4   18  UNSIGNEDINT    3
+  4   19  TIMES          *
+  4   20  LEFTPAREN      (
+  4   21  MINUS          -
+  4   22  UNSIGNEDINT    1
+  4   24  PLUS           +
+  4   26  MINUS          -
+  4   27  UNSIGNEDINT    1
+  4   29  PLUS           +
+  4   31  MINUS          -
+  4   32  UNSIGNEDINT    1
+  4   33  RIGHTPAREN     )
+  4   34  RIGHTPAREN     )
+  4   35  NEWLINE        
+
+  5    1  EOF            
